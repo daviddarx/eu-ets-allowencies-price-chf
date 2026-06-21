@@ -1,9 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EU ETS CO2 Price in CHF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <style>
       *,
       *::before,
@@ -18,7 +24,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        font-family:
+          "IBM Plex Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
           sans-serif;
         color: rgba(0, 0, 0, 0.8);
         padding: 1rem;
@@ -38,9 +49,22 @@
         line-height: 1.4;
       }
 
+      .card-title sub {
+        font-size: 0.7em;
+        line-height: 0;
+        vertical-align: baseline;
+        position: relative;
+        bottom: -0.15em;
+      }
+
       .card-subtitle {
         margin-bottom: 2rem;
         opacity: 0.5;
+        line-height: 1.35;
+      }
+
+      .card-subtitle em {
+        font-style: italic;
       }
 
       .price-chf {
@@ -111,9 +135,12 @@
       </div>
 
       <div id="content" class="hidden">
-        <div class="card-title">EU ETS CO2 ALLOWANCES via Compensators</div>
-        <div class="card-subtitle">Price per ton</div>
-        <div class="price-chf"><span id="chf-value">&mdash;</span> CHF</div>
+        <div class="card-title">TODAY'S PRICE<br />PER TONNE OF SEALED CO<sub>2</sub></div>
+        <div class="card-subtitle">
+          = price per EU ETS emission allowance<br />sealed through
+          <em>Compensators</em>
+        </div>
+        <div class="price-chf">CHF <span id="chf-value">&mdash;</span></div>
         <div class="price-eur"><span id="eur-value">&mdash;</span> EUR</div>
         <hr class="divider" />
         <div class="meta">
@@ -128,43 +155,40 @@
         </div>
       </div>
 
-      <div id="error" class="hidden error">
-        Price unavailable. Please try again later.
-      </div>
+      <div id="error" class="error hidden">Price unavailable. Please try again later.</div>
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        const loading = document.getElementById("loading");
-        const content = document.getElementById("content");
-        const error = document.getElementById("error");
+        const loading = document.getElementById("loading")
+        const content = document.getElementById("content")
+        const error = document.getElementById("error")
 
         try {
-          const response = await fetch("/api/price");
-          if (!response.ok) throw new Error("Request failed");
+          const response = await fetch("/api/price")
+          if (!response.ok) throw new Error("Request failed")
 
-          const data = await response.json();
-          if (data.error) throw new Error(data.error);
+          const data = await response.json()
+          if (data.error) throw new Error(data.error)
 
-          document.getElementById("chf-value").textContent =
-            data.priceChf.toFixed(2);
-          document.getElementById("eur-value").textContent =
-            data.priceEur.toFixed(2);
-          document.getElementById("rate-value").textContent =
-            data.exchangeRate.toFixed(4);
-          document.getElementById("updated-value").textContent =
-            new Intl.DateTimeFormat(undefined, {
+          document.getElementById("chf-value").textContent = data.priceChf.toFixed(2)
+          document.getElementById("eur-value").textContent = data.priceEur.toFixed(2)
+          document.getElementById("rate-value").textContent = data.exchangeRate.toFixed(4)
+          document.getElementById("updated-value").textContent = new Intl.DateTimeFormat(
+            undefined,
+            {
               dateStyle: "medium",
               timeStyle: "short",
-            }).format(new Date(data.fetchedAt));
+            }
+          ).format(new Date(data.fetchedAt))
 
-          loading.classList.add("hidden");
-          content.classList.remove("hidden");
+          loading.classList.add("hidden")
+          content.classList.remove("hidden")
         } catch (e) {
-          loading.classList.add("hidden");
-          error.classList.remove("hidden");
+          loading.classList.add("hidden")
+          error.classList.remove("hidden")
         }
-      });
+      })
     </script>
   </body>
 </html>

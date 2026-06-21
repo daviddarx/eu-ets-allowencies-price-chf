@@ -8,6 +8,8 @@
     "dev": "netlify dev"
   },
   "devDependencies": {
+    "prettier": "^3.8.4",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "vitest": "^3.2.1"
   }
 }
