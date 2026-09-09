@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- **Dev server:** `npx netlify dev` — starts local server on port 8888 (serves static files + serverless functions)
+- **Dev server:** `npm run dev` — starts local server on port 8888 (serves static files + serverless functions)
 - **Run tests:** `npm test` (runs `vitest run`)
 - **Run single test:** `npx vitest run tests/parse-price.test.mjs`
 

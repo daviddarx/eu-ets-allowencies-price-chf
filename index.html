@@ -135,10 +135,12 @@
       </div>
 
       <div id="content" class="hidden">
-        <div class="card-title">TODAY'S PRICE<br />PER TONNE OF SEALED CO<sub>2</sub></div>
+        <div class="card-title">
+          TODAY'S PRICE<br />PER TONNE OF SEALED CO<sub>2</sub>
+        </div>
         <div class="card-subtitle">
           = price per EU ETS emission allowance<br />sealed through
-          <em>Compensators</em>
+          <em>Compensators.org</em>
         </div>
         <div class="price-chf">CHF <span id="chf-value">&mdash;</span></div>
         <div class="price-eur"><span id="eur-value">&mdash;</span> EUR</div>
@@ -155,40 +157,43 @@
         </div>
       </div>
 
-      <div id="error" class="error hidden">Price unavailable. Please try again later.</div>
+      <div id="error" class="error hidden">
+        Price unavailable. Please try again later.
+      </div>
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        const loading = document.getElementById("loading")
-        const content = document.getElementById("content")
-        const error = document.getElementById("error")
+        const loading = document.getElementById("loading");
+        const content = document.getElementById("content");
+        const error = document.getElementById("error");
 
         try {
-          const response = await fetch("/api/price")
-          if (!response.ok) throw new Error("Request failed")
+          const response = await fetch("/api/price");
+          if (!response.ok) throw new Error("Request failed");
 
-          const data = await response.json()
-          if (data.error) throw new Error(data.error)
+          const data = await response.json();
+          if (data.error) throw new Error(data.error);
 
-          document.getElementById("chf-value").textContent = data.priceChf.toFixed(2)
-          document.getElementById("eur-value").textContent = data.priceEur.toFixed(2)
-          document.getElementById("rate-value").textContent = data.exchangeRate.toFixed(4)
-          document.getElementById("updated-value").textContent = new Intl.DateTimeFormat(
-            undefined,
-            {
+          document.getElementById("chf-value").textContent =
+            data.priceChf.toFixed(2);
+          document.getElementById("eur-value").textContent =
+            data.priceEur.toFixed(2);
+          document.getElementById("rate-value").textContent =
+            data.exchangeRate.toFixed(4);
+          document.getElementById("updated-value").textContent =
+            new Intl.DateTimeFormat(undefined, {
               dateStyle: "medium",
               timeStyle: "short",
-            }
-          ).format(new Date(data.fetchedAt))
+            }).format(new Date(data.fetchedAt));
 
-          loading.classList.add("hidden")
-          content.classList.remove("hidden")
+          loading.classList.add("hidden");
+          content.classList.remove("hidden");
         } catch (e) {
-          loading.classList.add("hidden")
-          error.classList.remove("hidden")
+          loading.classList.add("hidden");
+          error.classList.remove("hidden");
         }
-      })
+      });
     </script>
   </body>
 </html>
