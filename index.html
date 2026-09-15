@@ -19,6 +19,16 @@
         box-sizing: border-box;
       }
 
+      :root {
+        --gutter: 24px;
+      }
+
+      @media (max-width: 640px) {
+        :root {
+          --gutter: 16px;
+        }
+      }
+
       body {
         min-height: 100vh;
         display: flex;
@@ -32,7 +42,23 @@
           Roboto,
           sans-serif;
         color: rgba(0, 0, 0, 0.8);
-        padding: 1rem;
+        padding: var(--gutter);
+      }
+
+      .page-title {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: calc(420px + var(--gutter) * 2);
+        padding: var(--gutter) calc(2.5rem + var(--gutter));
+        text-align: center;
+        color: #f00000;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 400;
+        line-height: 1.4;
       }
 
       .card {
@@ -44,11 +70,14 @@
 
       .card-title {
         text-transform: uppercase;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.05em;
         margin-bottom: 0.5rem;
         line-height: 1.4;
+        font-weight: 700;
+        font-size: 1.25rem;
       }
 
+      .page-title sub,
       .card-title sub {
         font-size: 0.7em;
         line-height: 0;
@@ -59,7 +88,6 @@
 
       .card-subtitle {
         margin-bottom: 2rem;
-        opacity: 0.5;
         line-height: 1.35;
       }
 
@@ -76,7 +104,11 @@
 
       .price-eur {
         margin-bottom: 1.5rem;
-        opacity: 0.5;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
       }
 
       .divider {
@@ -89,10 +121,6 @@
         font-size: 0.8rem;
         line-height: 1.8;
         opacity: 0.5;
-      }
-
-      .meta .label {
-        color: #64748b;
       }
 
       .loading {
@@ -128,6 +156,10 @@
     </style>
   </head>
   <body>
+    <h1 class="page-title">
+      Sealing CO<sub>2</sub>: Art as Collective Climate Action
+    </h1>
+
     <div class="card">
       <div id="loading" class="loading">
         <div class="spinner"></div>
@@ -140,7 +172,7 @@
         </div>
         <div class="card-subtitle">
           = price per EU ETS emission allowance<br />sealed through
-          <em>Compensators.org</em>
+          <a href="https://www.compensators.org/"><em>Compensators.org</em></a>
         </div>
         <div class="price-chf">CHF <span id="chf-value">&mdash;</span></div>
         <div class="price-eur"><span id="eur-value">&mdash;</span> EUR</div>
